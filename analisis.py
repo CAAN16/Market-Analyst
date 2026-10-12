@@ -9,8 +9,8 @@ import pandas as pd
 
 TICKERS = [
     "AAPL", "MSFT", "NVDA", "AMZN", "GOOGL",
-    "WALMEX.MX", "GFNORTEO.MX", "AMXL.MX",
-    "SPY", "QQQ", "VOO",
+    "WALMEX.MX", "GFNORTEO.MX", "ACN", "TSLA", "META",
+    "BBVA", "CSCO", "AMXL.MX", "SPY", "QQQ", "VOO",
 ]
 
 

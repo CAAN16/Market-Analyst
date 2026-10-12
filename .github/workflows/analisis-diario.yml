@@ -1,0 +1,29 @@
+name: Análisis diario de mercado
+
+on:
+  schedule:
+    - cron: '0 13 * * 1-5'  # 7:00 AM hora Centro de México (UTC-6), lunes a viernes
+  workflow_dispatch:  # permite correrlo manualmente desde la pestaña Actions
+
+jobs:
+  analisis:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - run: pip install -r requirements.txt
+
+      - run: python analisis.py
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_PASS: ${{ secrets.GMAIL_PASS }}
+          DESTINATARIO: ${{ secrets.DESTINATARIO }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: preview
+          path: preview.html

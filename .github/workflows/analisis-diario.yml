@@ -2,7 +2,7 @@ name: Análisis diario de mercado
 
 on:
   schedule:
-    - cron: '0 13 * * 1-5'  # 7:00 AM hora Centro de México (UTC-6), lunes a viernes
+    - cron: '0 15 * * 1-5'  # 7:00 AM hora Centro de México (UTC-6), lunes a viernes
   workflow_dispatch:  # permite correrlo manualmente desde la pestaña Actions
 
 jobs:

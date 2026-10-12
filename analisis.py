@@ -6,7 +6,6 @@ from datetime import datetime
 
 import yfinance as yf
 import pandas as pd
-import pandas_ta as ta
 
 TICKERS = [
     "AAPL", "MSFT", "NVDA", "AMZN", "GOOGL",
@@ -14,6 +13,18 @@ TICKERS = [
     "SPY", "QQQ", "VOO",
 ]
 
+def calcular_sma(serie, periodo):
+    return serie.rolling(window=periodo).mean()
+
+
+def calcular_rsi(serie, periodo=14):
+    delta = serie.diff()
+    ganancia = delta.clip(lower=0)
+    perdida = -delta.clip(upper=0)
+    avg_ganancia = ganancia.rolling(window=periodo).mean()
+    avg_perdida = perdida.rolling(window=periodo).mean()
+    rs = avg_ganancia / avg_perdida
+    return 100 - (100 / (1 + rs))
 
 def analizar_ticker(ticker):
     try:
@@ -26,9 +37,9 @@ def analizar_ticker(ticker):
         if isinstance(close, pd.DataFrame):
             close = close.iloc[:, 0]
 
-        sma20 = ta.sma(close, length=20)
-        sma50 = ta.sma(close, length=50)
-        rsi = ta.rsi(close, length=14)
+        sma20 = calcular_sma(close, 20)
+        sma50 = calcular_sma(close, 50)
+        rsi = calcular_rsi(close, 14)
 
         precio_actual = float(close.iloc[-1])
         sma20_actual = float(sma20.iloc[-1])
